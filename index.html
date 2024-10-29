@@ -53,7 +53,7 @@
                         const randomIndex = Math.floor(Math.random() * nonEmptyLines.length); // Генерируем случайный индекс
                         const randomLine = nonEmptyLines[randomIndex]; // Получаем случайную непустую строку
 
-                        const result = str.split('–');
+                        const result = randomLine.split('–');
 
                         document.getElementById("q").textContent = result[0]; // Выводим в элемент
                         document.getElementById("a").textContent = result[1]; // Выводим в элемент
