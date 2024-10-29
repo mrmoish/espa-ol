@@ -47,6 +47,19 @@
                 const result = randomLine.split('–');
 
                 document.getElementById("q").textContent = result[0]; // Выводим в элемент
+
+
+
+                const randomIndex2 = Math.floor(Math.random() * nonEmptyLines.length); // Генерируем случайный индекс
+                const randomLine2 = nonEmptyLines[randomIndex2]; // Получаем случайную непустую строку
+                const result2 = randomLine2.split('–');
+
+                if(Math.floor(Math.random() * 2))
+                    document.getElementById("o").textContent = result[1] + ' VS ' + result2[1];
+                else{
+                    document.getElementById("o").textContent = result2[1] + ' VS ' + result[1];
+                }
+
                 document.getElementById("a").textContent = result[1]; // Выводим в элемент
                 
             } else {
