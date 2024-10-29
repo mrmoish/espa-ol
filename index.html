@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        div {
+            display: none;
+        }
+        div.show{
+            display: block;
+        }
+    </style>
+    <script>
+        document.addEventListener("click", function(event) {
+            const currentBlock = document.querySelector(".show");
+
+            if (currentBlock) {
+                // Убираем класс у текущего элемента
+                currentBlock.classList.remove("show");
+
+                // Находим следующий блок и добавляем к нему класс
+                const nextBlock = currentBlock.nextElementSibling;
+                if (nextBlock) {
+                    nextBlock.classList.add("show");
+                }
+                else{
+                    // Если следующего элемента нет, добавляем класс к первому элементу
+                    const firstBlock = document.querySelector("div"); // например, первый <div>
+                    if (firstBlock) {
+                        firstBlock.classList.add("show");
+                    }
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+
+    
+    <div class="show"> вопрос </div>
+    <div> варианты </div>
+    <div> ответ </div>
+</body>
+</html>
