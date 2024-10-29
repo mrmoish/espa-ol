@@ -44,8 +44,18 @@
                     return response.text(); // Получаем текст
                 })
                 .then(content => {
-                    const firstLine = content.split("\n")[0]; // Получаем первую строку
-                    document.getElementById("output").textContent = firstLine; // Выводим в элемент
+                    const lines = content.split("\n"); // Разбиваем содержимое на строки
+                    const nonEmptyLines = lines.filter(line => line.trim() !== ""); // Фильтруем непустые строки
+
+
+                    if (nonEmptyLines.length > 0) {
+                        const randomIndex = Math.floor(Math.random() * nonEmptyLines.length); // Генерируем случайный индекс
+                        const randomLine = nonEmptyLines[randomIndex]; // Получаем случайную непустую строку
+                        document.getElementById("output").textContent = randomLine; // Выводим в элемент
+                    } else {
+                        document.getElementById("output").textContent = "Нет непустых строк в файле.";
+                    }
+                
                 })
                 .catch(error => console.error("Ошибка:", error));
         }
