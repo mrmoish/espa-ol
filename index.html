@@ -30,6 +30,7 @@
                     // Если следующего элемента нет, добавляем класс к первому элементу
                     const firstBlock = document.querySelector("div"); // например, первый <div>
                     if (firstBlock) {
+                        random();
                         firstBlock.classList.add("show");
                     }
                 }
@@ -37,6 +38,22 @@
         });
 
         let nonEmptyLines = [];
+
+        function random(){
+            if (nonEmptyLines.length > 0) {
+                const randomIndex = Math.floor(Math.random() * nonEmptyLines.length); // Генерируем случайный индекс
+                const randomLine = nonEmptyLines[randomIndex]; // Получаем случайную непустую строку
+
+                const result = randomLine.split('–');
+
+                document.getElementById("q").textContent = result[0]; // Выводим в элемент
+                document.getElementById("a").textContent = result[1]; // Выводим в элемент
+                
+            } else {
+                document.getElementById("a").textContent = "Нет непустых строк в файле.";
+            }
+
+        }
         // Функция для загрузки файла и вывода первой строки
         function loadFile() {
             fetch('100verbos.txt') // Замените 'data.txt' на имя вашего файла
@@ -49,19 +66,7 @@
                     nonEmptyLines = lines.filter(line => line.trim() !== ""); // Фильтруем непустые строки
 
 
-                    if (nonEmptyLines.length > 0) {
-                        const randomIndex = Math.floor(Math.random() * nonEmptyLines.length); // Генерируем случайный индекс
-                        const randomLine = nonEmptyLines[randomIndex]; // Получаем случайную непустую строку
-
-                        const result = randomLine.split('–');
-
-                        document.getElementById("q").textContent = result[0]; // Выводим в элемент
-                        document.getElementById("a").textContent = result[1]; // Выводим в элемент
-                        
-
-                    } else {
-                        document.getElementById("output").textContent = "Нет непустых строк в файле.";
-                    }
+                    random();
                 
                 })
                 .catch(error => console.error("Ошибка:", error));
@@ -77,6 +82,5 @@
     <div class="show" id="q"> вопрос </div>
     <div id="o"> варианты </div>
     <div id="a"> ответ </div>
-    <p id="output"></p>
 </body>
 </html>
