@@ -35,6 +35,23 @@
                 }
             }
         });
+
+        // Функция для загрузки файла и вывода первой строки
+        function loadFile() {
+            fetch('100verbos.txt') // Замените 'data.txt' на имя вашего файла
+                .then(response => {
+                    if (!response.ok) throw new Error("Ошибка загрузки файла");
+                    return response.text(); // Получаем текст
+                })
+                .then(content => {
+                    const firstLine = content.split("\n")[0]; // Получаем первую строку
+                    document.getElementById("output").textContent = firstLine; // Выводим в элемент
+                })
+                .catch(error => console.error("Ошибка:", error));
+        }
+
+        // Загружаем файл при загрузке страницы
+        window.onload = loadFile;
     </script>
 </head>
 <body>
@@ -43,5 +60,6 @@
     <div class="show"> вопрос </div>
     <div> варианты </div>
     <div> ответ </div>
+    <p id="output"></p>
 </body>
 </html>
