@@ -36,6 +36,7 @@
             }
         });
 
+        let nonEmptyLines = [];
         // Функция для загрузки файла и вывода первой строки
         function loadFile() {
             fetch('100verbos.txt') // Замените 'data.txt' на имя вашего файла
@@ -45,13 +46,19 @@
                 })
                 .then(content => {
                     const lines = content.split("\n"); // Разбиваем содержимое на строки
-                    const nonEmptyLines = lines.filter(line => line.trim() !== ""); // Фильтруем непустые строки
+                    nonEmptyLines = lines.filter(line => line.trim() !== ""); // Фильтруем непустые строки
 
 
                     if (nonEmptyLines.length > 0) {
                         const randomIndex = Math.floor(Math.random() * nonEmptyLines.length); // Генерируем случайный индекс
                         const randomLine = nonEmptyLines[randomIndex]; // Получаем случайную непустую строку
-                        document.getElementById("output").textContent = randomLine; // Выводим в элемент
+
+                        const result = str.split('–');
+
+                        document.getElementById("q").textContent = result[0]; // Выводим в элемент
+                        document.getElementById("a").textContent = result[1]; // Выводим в элемент
+                        
+
                     } else {
                         document.getElementById("output").textContent = "Нет непустых строк в файле.";
                     }
@@ -67,9 +74,9 @@
 <body>
 
     
-    <div class="show"> вопрос </div>
-    <div> варианты </div>
-    <div> ответ </div>
+    <div class="show" id="q"> вопрос </div>
+    <div id="o"> варианты </div>
+    <div id="a"> ответ </div>
     <p id="output"></p>
 </body>
 </html>
