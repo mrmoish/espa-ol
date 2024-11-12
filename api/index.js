@@ -3,15 +3,14 @@
 const fs = require('fs');
 export default function handler(req, res) {
 
-
-    fs.appendFile('phrase', '\nДобавляем новую строку', (err) => {
-      if (err) {
-        console.error('Ошибка при добавлении данных:', err);
-        return;
-      }
-      console.log('Данные успешно добавлены.');
-    });
     
+    try {
+      fs.writeFileSync('phrase', 'Hello, World!');
+      console.log('Запись успешно завершена.');
+    } catch (err) {
+      console.error('Ошибка при записи в файл:', err);
+    }
+
 
     
     fs.readFile('phrase', 'utf8', (err, data) => {
