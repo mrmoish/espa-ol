@@ -1,25 +1,38 @@
-// api/server.js
+// pages/api/index.js
 
-const fs = require('fs');
-export default function handler(req, res) {
+const { MongoClient } = require('mongodb');
 
-    
-    try {
-      fs.writeFileSync('/phrase', 'Hello, World!');
-      console.log('Запись успешно завершена.');
-    } catch (err) {
-      console.error('Ошибка при записи в файл:', err);
-    }
+let client;
+let db;
 
-
-    
-    fs.readFile('/phrase', 'utf8', (err, data) => {
-      if (err) {
-          
-        res.status(200).json({ message: 'Ошибка при чтении файла' });
-        return;
-      }
-    res.status(200).json({ message: data });
+// Функция для подключения к базе данных
+async function connectToDatabase() {
+  if (!client) {
+    client = new MongoClient(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
     });
+    await client.connect();
+    db = client.db('your_database_name'); // Укажите название вашей базы данных
   }
-  
+  return db;
+}
+
+export default async function handler(req, res) {
+  try {
+    // Подключаемся к базе данных
+    const db = await connectToDatabase();
+    const collection = db.collection('user_agents'); // Замените на имя вашей коллекции
+
+    // Извлекаем User-Agent из заголовков
+    const userAgent = req.headers['user-agent'];
+
+    // Сохраняем User-Agent в базу данных
+    await collection.insertOne({ userAgent, timestamp: new Date() });
+
+    res.status(200).json({ message: 'User-Agent успешно сохранен', userAgent });
+  } catch (error) {
+    console.error('Ошибка при сохранении User-Agent:', error);
+    res.status(500).json({ error: 'Ошибка при сохранении User-Agent' });
+  }
+}
